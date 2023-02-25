@@ -23,12 +23,14 @@ void ofApp::draw() {
     It's in charge of drawing all figures and text on screen */
 
     // Progress Bar
-    ofSetColor(256);
+    ofSetColor(0);
     ofFill();
 
     float pos = playing ? progress : lastPos;
     int percent = pos * 100;
     ofDrawBitmapString("Song Progress: " + ofToString(percent) + "%", 0, 30);
+    ofRectangle pgbar(0,40,pos * ofGetWidth(),10);
+    ofDrawRectangle(pgbar);
 
     // Mode Selection
     if (!playing) {
@@ -47,7 +49,7 @@ void ofApp::draw() {
 }
 void ofApp::drawMode1(vector<float> amplitudes) {
     ofFill();        // Drawn Shapes will be filled in with color
-    ofSetColor(256); // This resets the color of the "brush" to white
+    ofSetColor(0); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Height Visualizer", 0, 15);
     ofSetColor(0, 0, ofRandom(255));
     ofRectangle bars; 
@@ -67,7 +69,7 @@ void ofApp::drawMode1(vector<float> amplitudes) {
 void ofApp::drawMode2(vector<float> amplitudes) {
     ofSetLineWidth(5); // Sets the line width
     ofNoFill();        // Only the outline of shapes will be drawn
-    ofSetColor(256);   // This resets the color of the "brush" to white
+    ofSetColor(0);   // This resets the color of the "brush" to white
     ofDrawBitmapString("Circle Radius Visualizer", 0, 15);
     int bands = amplitudes.size();
     for (int i = 0; i < bands; i++) {
@@ -78,7 +80,7 @@ void ofApp::drawMode2(vector<float> amplitudes) {
 }
 
 void ofApp::drawMode3(vector<float> amplitudes) {
-    ofSetColor(256); // This resets the color of the "brush" to white
+    ofSetColor(0); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Width Visualizer", 0, 15);
     ofSetBackgroundColor(209,242,235);
     // YOUR CODE HERE

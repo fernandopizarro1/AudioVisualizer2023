@@ -8,6 +8,7 @@ class ofApp : public ofBaseApp {
   private:
     ofSoundPlayer sound;
     AudioVisualizer visualizer;
+    ofRectangle pgbar; //progress bar
 
     bool playing = false;
     char mode = '1';
@@ -17,7 +18,7 @@ class ofApp : public ofBaseApp {
 
     float progress = 0;
     float lastPos = 0;
-    int song = 1;
+    int song = 1; // variable to skip songs 
 
   public:
     void setup();
