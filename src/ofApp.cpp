@@ -1,4 +1,5 @@
 #include "ofApp.hpp"
+int song = 1;
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -53,6 +54,7 @@ void ofApp::drawMode1(vector<float> amplitudes) {
     ofDrawRectRounded(2, ofGetHeight() - 100, 50, amplitudes[0], 20);
     ofSetBackgroundColor(214,234,248); // Sets the Background Color
 }
+
 void ofApp::drawMode2(vector<float> amplitudes) {
     ofSetLineWidth(5); // Sets the line width
     ofNoFill();        // Only the outline of shapes will be drawn
@@ -76,6 +78,7 @@ void ofApp::drawMode3(vector<float> amplitudes) {
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
     // This method is called automatically when any key is pressed
+    vector<string> songs = {"beat.wav","geesebeat.wav","pigeon-coo.wav","rock-song.wav"};
     switch (key) {
     case 'p':
         if (playing) {
@@ -96,8 +99,25 @@ void ofApp::keyPressed(int key) {
         break;
     case 'a':
         mode = 'a';
+        break; 
+    case 'd': 
+        if (playing) {
+        sound.load(songs[song]);
+        sound.play();
+        } else {
+            sound.load(songs[song]); }
+            sound.setLoop(true);
+        (song >= songs.size() - 1) ? song -= songs.size() - 1: song += 1; 
         break;
-    }
+    case '=': {
+        if (sound.getVolume() > 0) {
+        sound.setVolume(sound.getVolume() - 0.1); } 
+        } break; 
+    case '-': {
+        if (sound.getVolume() < 1) {
+        sound.setVolume(sound.getVolume() + 0.1); }
+        } break; 
+    }  
 }
 
 //--------------------------------------------------------------
