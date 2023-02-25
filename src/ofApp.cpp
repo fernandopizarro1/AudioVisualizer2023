@@ -1,5 +1,4 @@
 #include "ofApp.hpp"
-int song = 1;
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -51,7 +50,17 @@ void ofApp::drawMode1(vector<float> amplitudes) {
     ofSetColor(256); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Height Visualizer", 0, 15);
     ofSetColor(0, 0, ofRandom(255));
-    ofDrawRectRounded(2, ofGetHeight() - 100, 50, amplitudes[0], 20);
+    ofRectangle bars; 
+    int bands = amplitudes.size();
+    int numbands = 0; 
+    for (int i = 0; i < bands; i++) {
+        bars.x = numbands; 
+        numbands += ofGetWidth() / bands; 
+        bars.y = ofGetHeight() - 100;
+        bars.width = ofGetWidth() / bands; 
+        bars.height = amplitudes[i] * 2; 
+        ofDrawRectRounded(bars,10); 
+    }
     ofSetBackgroundColor(214,234,248); // Sets the Background Color
 }
 

@@ -17,6 +17,7 @@ class ofApp : public ofBaseApp {
 
     float progress = 0;
     float lastPos = 0;
+    int song = 1;
 
   public:
     void setup();
