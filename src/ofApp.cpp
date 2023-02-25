@@ -49,8 +49,9 @@ void ofApp::drawMode1(vector<float> amplitudes) {
     ofFill();        // Drawn Shapes will be filled in with color
     ofSetColor(256); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Height Visualizer", 0, 15);
-    ofSetColor(189, 45, 135);
-    ofDrawRectangle(2, ofGetHeight() - 100, 50, amplitudes[0]);
+    ofSetColor(0, 0, ofRandom(255));
+    ofDrawRectRounded(2, ofGetHeight() - 100, 50, amplitudes[0], 20);
+    ofSetBackgroundColor(214,234,248); // Sets the Background Color
 }
 void ofApp::drawMode2(vector<float> amplitudes) {
     ofSetLineWidth(5); // Sets the line width
@@ -62,11 +63,13 @@ void ofApp::drawMode2(vector<float> amplitudes) {
         ofSetColor((bands - i) * 32 % 256, 18, 144); // Color varies between frequencies
         ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, amplitudes[0] / (i + 1));
     }
+    ofSetBackgroundColor(250,219,216);
 }
 
 void ofApp::drawMode3(vector<float> amplitudes) {
     ofSetColor(256); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Width Visualizer", 0, 15);
+    ofSetBackgroundColor(209,242,235);
     // YOUR CODE HERE
 }
 
@@ -90,6 +93,9 @@ void ofApp::keyPressed(int key) {
         break;
     case '3':
         mode = '3';
+        break;
+    case 'a':
+        mode = 'a';
         break;
     }
 }
