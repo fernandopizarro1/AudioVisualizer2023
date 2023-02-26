@@ -52,16 +52,16 @@ void ofApp::drawMode1(vector<float> amplitudes) {
     ofSetColor(0); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Height Visualizer", 0, 15);
     ofSetColor(0, 0, ofRandom(255));
-    ofRectangle bars; 
+    ofRectangle bars;
     int bands = amplitudes.size();
-    int numbands = 0; 
+    int numbands = 0;
     for (int i = 0; i < bands; i++) {
-        bars.x = numbands; 
-        numbands += ofGetWidth() / bands; 
+        bars.x = numbands;
+        numbands += ofGetWidth() / bands;
         bars.y = ofGetHeight() - 100;
-        bars.width = ofGetWidth() / bands; 
-        bars.height = amplitudes[i] * 2; 
-        ofDrawRectRounded(bars,10); 
+        bars.width = ofGetWidth() / bands;
+        bars.height = amplitudes[i] * 2;
+        ofDrawRectRounded(bars,10);
     }
     ofSetBackgroundColor(214,234,248); // Sets the Background Color
 }
@@ -120,11 +120,11 @@ void ofApp::keyPressed(int key) {
             sound.setLoop(true);
         (song >= songs.size() - 1) ? song -= songs.size() - 1: song += 1; 
         break;
-    case '=': {
+    case '-': {
         if (sound.getVolume() > 0) {
         sound.setVolume(sound.getVolume() - 0.1); } 
         } break; 
-    case '-': {
+    case '=': {
         if (sound.getVolume() < 1) {
         sound.setVolume(sound.getVolume() + 0.1); }
         } break; 
