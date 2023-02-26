@@ -26,3 +26,4 @@ Please fill out the information below for each member of the team:
 ### [FULL STUDENT A NAME] : [STUDENT A UPR EMAIL]
 Fernando L. Pizarro Diaz : fernando.pizarro1@upr.edu
 ### [FULL STUDENT B NAME] : [STUDENT B UPR EMAIL]
+Veliana Agrait Rodriguez : veliana.agrait@upr.edu
