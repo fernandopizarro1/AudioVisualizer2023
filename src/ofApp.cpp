@@ -3,7 +3,6 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
     sound.load("beat.wav");           // Loads a sound file (in bin/data/)
-    sound.setLoop(true);              // Makes the song loop indefinitely
     sound.setVolume(1);               // Sets the song volume
     ofSetBackgroundColor(36, 32, 56); // Sets the Background Color
 }
@@ -23,7 +22,7 @@ void ofApp::draw() {
     It's in charge of drawing all figures and text on screen */
 
     // Progress Bar
-    ofSetColor(0);
+    ofSetColor(256);
     ofFill();
 
     float pos = playing ? progress : lastPos;
@@ -43,13 +42,40 @@ void ofApp::draw() {
         drawMode2(amplitudes);
     } else if (mode == '3') {
         drawMode3(amplitudes);
+    } else if (mode == 'a') {
+        ofDrawBitmapString("Visualizer is paused", 0, 15);
+    }
+
+    ofSetColor(256);
+    if (songmode == 'x') {
+        ofDrawBitmapString("No Mode Selected", ofGetWidth() / 2, 15);
+        sound.setLoop(false);
+    } else if (songmode == 'r') {
+        ofDrawBitmapString("Repeat Mode Selected", ofGetWidth() / 2, 15);
+        sound.setLoop(true);
+    } else if (songmode == 'l') {
+        ofDrawBitmapString("Loop Mode Selected",ofGetWidth() / 2, 15);
+        sound.setLoop(false);
+        if (!sound.isPlaying() && playing) {
+            (song >= size) ? song -= size: song += 1; 
+            sound.load(songs[song]);
+            sound.play();
+        }
+    } else if (songmode == 'b') {
+        ofDrawBitmapString("Shuffle Mode Selected", ofGetWidth() / 2, 15);
+        sound.setLoop(false);
+        song = ofRandom(size);
+        if (!sound.isPlaying() && playing) {
+            sound.load(songs[song]);
+            sound.play(); 
+        }
     }
 
     // ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
 }
 void ofApp::drawMode1(vector<float> amplitudes) {
     ofFill();        // Drawn Shapes will be filled in with color
-    ofSetColor(0); // This resets the color of the "brush" to white
+    ofSetColor(256); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Height Visualizer", 0, 15);
     ofSetColor(0, 0, ofRandom(255));
     ofRectangle bars;
@@ -63,33 +89,32 @@ void ofApp::drawMode1(vector<float> amplitudes) {
         bars.height = amplitudes[i] * 2;
         ofDrawRectRounded(bars,10);
     }
-    ofSetBackgroundColor(214,234,248); // Sets the Background Color
+    ofSetBackgroundColor(56,32,36); // Sets the Background Color
 }
 
 void ofApp::drawMode2(vector<float> amplitudes) {
     ofSetLineWidth(5); // Sets the line width
     ofNoFill();        // Only the outline of shapes will be drawn
-    ofSetColor(0);   // This resets the color of the "brush" to white
+    ofSetColor(256);   // This resets the color of the "brush" to white
     ofDrawBitmapString("Circle Radius Visualizer", 0, 15);
     int bands = amplitudes.size();
     for (int i = 0; i < bands; i++) {
         ofSetColor((bands - i) * 32 % 256, 18, 144); // Color varies between frequencies
         ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, amplitudes[0] / (i + 1));
     }
-    ofSetBackgroundColor(250,219,216);
+    ofSetBackgroundColor(32,36,56);
 }
 
 void ofApp::drawMode3(vector<float> amplitudes) {
     ofSetColor(0); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Width Visualizer", 0, 15);
-    ofSetBackgroundColor(209,242,235);
+    ofSetBackgroundColor(36,32,56);
     // YOUR CODE HERE
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
     // This method is called automatically when any key is pressed
-    vector<string> songs = {"beat.wav","geesebeat.wav","pigeon-coo.wav","rock-song.wav"};
     switch (key) {
     case 'p':
         if (playing) {
@@ -112,13 +137,12 @@ void ofApp::keyPressed(int key) {
         mode = 'a';
         break; 
     case 'd': 
+        (song >= size) ? song -= size: song += 1; 
         if (playing) {
         sound.load(songs[song]);
         sound.play();
         } else {
             sound.load(songs[song]); }
-            sound.setLoop(true);
-        (song >= songs.size() - 1) ? song -= songs.size() - 1: song += 1; 
         break;
     case '-': {
         if (sound.getVolume() > 0) {
@@ -128,11 +152,36 @@ void ofApp::keyPressed(int key) {
         if (sound.getVolume() < 1) {
         sound.setVolume(sound.getVolume() + 0.1); }
         } break; 
+    case 'l': {
+        if (songmode != 'l') {
+            songmode = 'l';
+        } else if (clicked) {
+            songmode = 'x';
+            clicked = false;
+        }
+    } break;
+    case 'r': {
+        if (songmode != 'r') {
+            songmode = 'r';
+        } else if (clicked) {
+            songmode = 'x'; 
+            clicked = false; 
+        }
+    } break; 
+    case 'b': {
+        if (songmode != 'b') {
+            songmode = 'b';
+        } else if (clicked) {
+            songmode = 'x';
+            clicked = false; 
+        }
+    } break;
     }  
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
+    clicked = true;
 }
 
 //--------------------------------------------------------------
