@@ -61,6 +61,15 @@ void ofApp::draw() {
             sound.load(songs[song]);
             sound.play();
         }
+    } else if (songmode = 'b') {
+        ofDrawBitmapString("Shuffle mode selected", ofGetWidth() / 2, 15);
+        sound.setLoop(false);
+        song = ofRandom(size);
+        if (!sound.isPlaying() && playing) {
+            sound.load(songs[song]);
+            sound.play();
+        }
+
     }
 
     // ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
@@ -160,6 +169,14 @@ void ofApp::keyPressed(int key) {
             clicked = false; 
         }
     } break; 
+    case 'b': {
+        if (songmode != 'b') {
+            songmode = 'b';
+        } else if (clicked) {
+            songmode = 'x';
+            clicked = false; 
+        }
+    }
     }  
 }
 

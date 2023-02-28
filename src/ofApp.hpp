@@ -15,7 +15,7 @@ class ofApp : public ofBaseApp {
     char songmode = 'x';
     vector<string> songs = {"beat.wav","geesebeat.wav","pigeon-coo.wav","rock-song.wav"}; 
     bool clicked = false; 
-    int size = songs.size() - 1;  
+    int size = songs.size() - 1; 
 
     int cur_x, cur_y = 0;
     float sound_length;
