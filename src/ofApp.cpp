@@ -53,22 +53,6 @@ void ofApp::draw() {
     } else if (songmode == 'r') {
         ofDrawBitmapString("Repeat Mode Selected", ofGetWidth() / 2, 15);
         sound.setLoop(true);
-    } else if (songmode == 'l') {
-        ofDrawBitmapString("Loop Mode Selected",ofGetWidth() / 2, 15);
-        sound.setLoop(false);
-        if (!sound.isPlaying() && playing) {
-            (song >= size) ? song -= size: song += 1; 
-            sound.load(songs[song]);
-            sound.play();
-        }
-    } else if (songmode == 'b') {
-        ofDrawBitmapString("Shuffle Mode Selected", ofGetWidth() / 2, 15);
-        sound.setLoop(false);
-        song = ofRandom(size);
-        if (!sound.isPlaying() && playing) {
-            sound.load(songs[song]);
-            sound.play(); 
-        }
     }
 
     // ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
@@ -152,14 +136,6 @@ void ofApp::keyPressed(int key) {
         if (sound.getVolume() < 1) {
         sound.setVolume(sound.getVolume() + 0.1); }
         } break; 
-    case 'l': {
-        if (songmode != 'l') {
-            songmode = 'l';
-        } else if (clicked) {
-            songmode = 'x';
-            clicked = false;
-        }
-    } break;
     case 'r': {
         if (songmode != 'r') {
             songmode = 'r';
@@ -168,14 +144,6 @@ void ofApp::keyPressed(int key) {
             clicked = false; 
         }
     } break; 
-    case 'b': {
-        if (songmode != 'b') {
-            songmode = 'b';
-        } else if (clicked) {
-            songmode = 'x';
-            clicked = false; 
-        }
-    } break;
     }  
 }
 
