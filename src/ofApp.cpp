@@ -70,10 +70,8 @@ void ofApp::draw() {
     } else if (mode == 'a') {
         ofDrawBitmapString("Visualizer is paused", 0, 15);
     }
-
-
-    // ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
 }
+
 void ofApp::drawMode1(vector<float> amplitudes) {
     ofFill();        // Drawn Shapes will be filled in with color
     ofSetColor(256); // This resets the color of the "brush" to white
@@ -175,33 +173,29 @@ void ofApp::keyPressed(int key) {
     case 'r': {
         if (songmode != 'r') {
             songmode = 'r';
-        } else if (clicked) {
+        } else {
             songmode = 'x'; 
-            clicked = false; 
         }
     } break; 
     case 'l': {
         if (songmode != 'l') {
             songmode = 'l';
-        } else if (clicked) {
+        } else {
             songmode = 'x';
-            clicked = false; 
         }
     } break; 
     case 'b': {
         if (songmode != 'b') {
             songmode = 'b';
-        } else if (clicked) {
+        } else {
             songmode = 'x';
-            clicked = false; 
         }
-    }
+    } break; 
     }  
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
-    clicked = true;
 }
 
 //--------------------------------------------------------------
