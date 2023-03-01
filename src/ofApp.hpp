@@ -32,6 +32,7 @@ class ofApp : public ofBaseApp {
     void drawMode1(vector<float> amplitudes);
     void drawMode2(vector<float> amplitudes);
     void drawMode3(vector<float> amplitudes);
+    void drawMode4(vector<float> amplitudes);
 
     void keyPressed(int key);
     void keyReleased(int key);
