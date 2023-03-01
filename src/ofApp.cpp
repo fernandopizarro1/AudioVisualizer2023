@@ -31,6 +31,31 @@ void ofApp::draw() {
     ofRectangle pgbar(0,40,pos * ofGetWidth(),10);
     ofDrawRectangle(pgbar);
 
+    if (songmode == 'x') {
+        ofDrawBitmapString("No Mode Selected", ofGetWidth() / 2, 15);
+        sound.setLoop(false);
+    } else if (songmode == 'r') {
+        ofDrawBitmapString("Repeat Mode Selected", ofGetWidth() / 2, 15);
+        sound.setLoop(true);
+    } else if (songmode == 'l') {
+        ofDrawBitmapString("Loop Mode Selected",ofGetWidth() / 2, 15);
+        sound.setLoop(false);
+        if (!sound.isPlaying() && playing) {
+            (song >= size ) ? song -= size : song += 1;
+            sound.load(songs[song]);
+            sound.play();
+        }
+    } else if (songmode == 'b') {
+        ofDrawBitmapString("Shuffle mode selected", ofGetWidth() / 2, 15);
+        sound.setLoop(false);
+        song = ofRandom(size);
+        if (!sound.isPlaying() && playing) {
+            sound.load(songs[song]);
+            sound.play();
+        }
+
+    }
+
     // Mode Selection
     if (!playing) {
         ofDrawBitmapString("Press 'p' to play some music!", ofGetWidth() / 2 - 50, ofGetHeight() / 2);
@@ -46,31 +71,6 @@ void ofApp::draw() {
         ofDrawBitmapString("Visualizer is paused", 0, 15);
     }
 
-    ofSetColor(256);
-    if (songmode == 'x') {
-        ofDrawBitmapString("No Mode Selected", ofGetWidth() / 2, 15);
-        sound.setLoop(false);
-    } else if (songmode == 'r') {
-        ofDrawBitmapString("Repeat Mode Selected", ofGetWidth() / 2, 15);
-        sound.setLoop(true);
-    } else if (songmode == 'l') {
-        ofDrawBitmapString("Loop Mode Selected",ofGetWidth() / 2, 15);
-        sound.setLoop(false);
-        if (!sound.isPlaying() && playing) {
-            (song >= size ) ? song -= size : song += 1;
-            sound.load(songs[song]);
-            sound.play();
-        }
-    } else if (songmode = 'b') {
-        ofDrawBitmapString("Shuffle mode selected", ofGetWidth() / 2, 15);
-        sound.setLoop(false);
-        song = ofRandom(size);
-        if (!sound.isPlaying() && playing) {
-            sound.load(songs[song]);
-            sound.play();
-        }
-
-    }
 
     // ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
 }
