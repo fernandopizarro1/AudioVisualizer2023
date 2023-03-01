@@ -111,16 +111,20 @@ void ofApp::drawMode3(vector<float> amplitudes) {
     ofSetColor(256); // This resets the color of the "brush" to white
     ofDrawBitmapString("Audio Spectrum Visualizer", 0, 15);
     ofSetColor(ofRandom(255), 0, 0);
-    ofTranslate(0,ofGetHeight()/2);
+    ofTranslate(ofGetWidth()/2,ofGetHeight()/2);
     ofRectangle bars;
     int bands = amplitudes.size();
     int numbands = 0;
     for (int i = 0; i < bands; i++) {
-        bars.x = numbands;
+        bars.x = 2+numbands*0.5;
         numbands += ofGetWidth() / bands;
         bars.y = 0;
-        bars.width = ofGetWidth() / bands;
+        bars.width = ofGetWidth() / bands / 4;
         bars.height = amplitudes[i] * 2;
+        ofDrawRectangle(bars);
+        ofRotateDeg(180,1,0,0);
+        ofDrawRectangle(bars);
+        ofRotateDeg(180,0,1,0);
         ofDrawRectangle(bars);
         ofRotateDeg(180,1,0,0);
         ofDrawRectangle(bars);
