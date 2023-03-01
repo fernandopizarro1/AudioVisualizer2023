@@ -12,6 +12,7 @@ class ofApp : public ofBaseApp {
 
     bool playing = false;
     char mode = '1';
+    bool paused = false; 
     char songmode = 'x';
     vector<string> songs = {"beat.wav","geesebeat.wav","pigeon-coo.wav","rock-song.wav"}; 
     int size = songs.size() - 1; 

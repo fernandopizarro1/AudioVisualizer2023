@@ -12,7 +12,9 @@ void ofApp::update() {
     /* The update method is called muliple times per second
     It's in charge of updating variables and the logic of our app */
     ofSoundUpdate();               // Updates all sound players
+    if (!paused) {
     visualizer.updateAmplitudes(); // Updates Amplitudes for visualizer
+    }
     progress = sound.getPosition();
 }
 
@@ -67,8 +69,6 @@ void ofApp::draw() {
         drawMode2(amplitudes);
     } else if (mode == '3') {
         drawMode3(amplitudes);
-    } else if (mode == 'a') {
-        ofDrawBitmapString("Visualizer is paused", 0, 15);
     }
 }
 
@@ -152,7 +152,7 @@ void ofApp::keyPressed(int key) {
         mode = '3';
         break;
     case 'a':
-        mode = 'a';
+        paused = !paused; 
         break; 
     case 'd': 
         (song >= size) ? song -= size: song += 1; 
