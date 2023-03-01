@@ -67,6 +67,8 @@ void ofApp::draw() {
         drawMode2(amplitudes);
     } else if (mode == '3') {
         drawMode3(amplitudes);
+    } else if (mode == '4') {
+        drawMode4(amplitudes);
     } else if (mode == 'a') {
         ofDrawBitmapString("Visualizer is paused", 0, 15);
     }
@@ -132,6 +134,28 @@ void ofApp::drawMode3(vector<float> amplitudes) {
     ofSetBackgroundColor(36,32,56); // Sets the Background Color
 }
 
+void ofApp::drawMode4(vector<float> amplitudes) {
+    ofSetLineWidth(5); // Sets the line width
+    ofNoFill();        // Only the outline of shapes will be drawn
+    ofSetColor(256);   // This resets the color of the "brush" to white
+    ofDrawBitmapString("Circle Bars Visualizer", 0, 15);
+    int bands = amplitudes.size()*4;
+    ofTranslate(ofGetWidth()/2,ofGetHeight()/2);
+    ofSetCircleResolution(bands);
+    ofSetColor(255,192,203);
+    ofDrawCircle(0,0,150);
+    ofRectangle bars;
+    for (int i = 0; i < bands; i++) {
+        bars.x = 0;
+        bars.y = -150;
+        bars.width = 150/(bands);
+        bars.height = amplitudes[i%(amplitudes.size())]*2;
+        ofDrawRectangle(bars);
+        ofRotateDeg((2*PI*150)/(bands*2),0,0,1);
+    }
+    ofSetBackgroundColor(32,36,56);
+}
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
     // This method is called automatically when any key is pressed
@@ -152,6 +176,9 @@ void ofApp::keyPressed(int key) {
         break;
     case '3':
         mode = '3';
+        break;
+    case '4':
+        mode = '4';
         break;
     case 'a':
         mode = 'a';
