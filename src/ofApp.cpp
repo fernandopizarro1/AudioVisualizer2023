@@ -12,10 +12,11 @@ void ofApp::update() {
     /* The update method is called muliple times per second
     It's in charge of updating variables and the logic of our app */
     ofSoundUpdate();               // Updates all sound players
-    if (!paused) {
+    if (!paused || !sound.isPlaying()) {
     visualizer.updateAmplitudes(); // Updates Amplitudes for visualizer
     }
     progress = sound.getPosition();
+    sound.setVolume(sound.getVolume());
 }
 
 //--------------------------------------------------------------
@@ -30,15 +31,24 @@ void ofApp::draw() {
     float pos = playing ? progress : lastPos;
     int percent = pos * 100;
     ofDrawBitmapString("Song Progress: " + ofToString(percent) + "%", 0, 30);
+    ofDrawBitmapString("Song Volume: " + ofToString(round(sound.getVolume() * 100)),0,80);
     ofRectangle pgbar(0,40,pos * ofGetWidth(),10);
     ofDrawRectangle(pgbar);
+    if (paused) {
+        ofDrawBitmapString("Visualizer is Paused",0,65);
+    }
 
     if (songmode == 'x') {
         ofDrawBitmapString("No Mode Selected", ofGetWidth() / 2, 15);
+        ofDrawBitmapString("R - Repeat mode, L- Loop Mode, B- Shuffle", ofGetWidth() / 2, 30);
         sound.setLoop(false);
     } else if (songmode == 'r') {
         ofDrawBitmapString("Repeat Mode Selected", ofGetWidth() / 2, 15);
         sound.setLoop(true);
+        if (!sound.isPlaying() && playing) {
+            sound.load(songs[song]);
+            sound.play();
+        }
     } else if (songmode == 'l') {
         ofDrawBitmapString("Loop Mode Selected",ofGetWidth() / 2, 15);
         sound.setLoop(false);
@@ -78,7 +88,7 @@ void ofApp::drawMode1(vector<float> amplitudes) {
     ofFill();        // Drawn Shapes will be filled in with color
     ofSetColor(256); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Height Visualizer", 0, 15);
-    ofSetColor(0, 0, ofRandom(255));
+    ofSetColor(0, 0, ofRandom(155));
     ofRectangle bars;
     int bands = amplitudes.size();
     int numbands = 0;
@@ -141,7 +151,8 @@ void ofApp::drawMode4(vector<float> amplitudes) {
     ofTranslate(ofGetWidth()/2,ofGetHeight()/2);
     ofSetCircleResolution(bands);
     ofSetColor(255,192,203);
-    ofDrawCircle(0,0,150);
+    if (playing) {
+    ofDrawCircle(0,0,150); }
     ofRectangle bars;
     for (int i = 0; i < bands; i++) {
         bars.x = 0;
@@ -190,12 +201,12 @@ void ofApp::keyPressed(int key) {
             sound.load(songs[song]); }
         break;
     case '-': {
-        if (sound.getVolume() > 0) {
-        sound.setVolume(sound.getVolume() - 0.1); } 
+        if (sound.getVolume() > 0.02) {
+        sound.setVolume(sound.getVolume() - 0.02); } 
         } break; 
     case '=': {
         if (sound.getVolume() < 1) {
-        sound.setVolume(sound.getVolume() + 0.1); }
+        sound.setVolume(sound.getVolume() + 0.02); }
         } break; 
     case 'r': {
         if (songmode != 'r') {
