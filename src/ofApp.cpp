@@ -151,7 +151,7 @@ void ofApp::drawMode4(vector<float> amplitudes) {
     ofTranslate(ofGetWidth()/2,ofGetHeight()/2);
     ofSetCircleResolution(bands);
     ofSetColor(255,192,203);
-    if (playing) {
+    if (progress>0 && progress<100) {
     ofDrawCircle(0,0,150); }
     ofRectangle bars;
     for (int i = 0; i < bands; i++) {
